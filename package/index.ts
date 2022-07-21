@@ -105,10 +105,15 @@ export default function RecoilizeDebugger(props: any) {
   };
 
   const createDevToolDataObject = (filteredSnapshot: any) => {
+    const fiberNodes = root._reactRootContainer? root._reactRootContainer._internalRoot.current: root[
+      Object.keys(root).find(key =>
+        key.startsWith('__reactContainer$')
+      )!
+    ].stateNode
     return {
       filteredSnapshot: filteredSnapshot,
       componentAtomTree: formatFiberNodes(
-        root._reactRootContainer._internalRoot.current,
+        fiberNodes,
       ),
     };
   };
